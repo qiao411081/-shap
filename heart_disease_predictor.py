@@ -29,9 +29,9 @@ slope_options = {
 }
 
 thal_options = {
-    3: 'Normal (3)',
-    6: 'Fixed defect (6)',
-    7: 'Reversible defect (7)'
+    1: 'Normal (1)',
+    2: 'Fixed defect (2)',
+    3: 'Reversible defect (3)'
 }
 
 # Define feature names
