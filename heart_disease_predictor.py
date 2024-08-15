@@ -34,6 +34,13 @@ thal_options = {
     7: 'Reversible defect (7)'
 }
 
+# 定义特征名称
+feature_names = [
+    "Age", "Sex", "Chest Pain Type", "Resting Blood Pressure", "Serum Cholestoral",
+    "Fasting Blood Sugar", "Resting ECG", "Max Heart Rate", "Exercise Induced Angina",
+    "ST Depression", "Slope", "Number of Vessels", "Thal"
+]
+
 # Streamlit的用户界面
 st.title("Heart Disease Predictor")
 
@@ -103,7 +110,7 @@ if st.button("Predict"):
     else:
         advice = (
             f"根据我们的模型预测，您的心脏疾病风险较低。"
-            f"模型预测您患有心脏疾病的可能性为{probability:.1f}%。"
+            f"模型预测您不患有心脏疾病的可能性为{probability:.1f}%。"
             "尽管如此，保持健康的生活方式仍然非常重要。"
             "建议您定期进行体检，以监测心脏健康，"
             "并在有任何不适症状时及时就医。"
@@ -113,11 +120,9 @@ if st.button("Predict"):
 
     # 计算SHAP值并显示力图
     explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=self.feature_names))
+    shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=feature_names))
 
-    shap.force_plot(explainer.expected_value, shap_values[0], pd.DataFrame([feature_values], columns=self.feature_names), matplotlib=True)
-    plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=300)
+    shap.force_plot(explainer.expected_value, shap_values[0], pd.DataFrame([feature_values], columns=feature_names), matplotlib=True)
+    plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
 
     st.image("shap_force_plot.png")
-
-# 运行Streamlit命令生成网页应用
